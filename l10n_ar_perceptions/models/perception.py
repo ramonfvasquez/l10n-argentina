@@ -301,7 +301,6 @@ class PerceptionPerception(models.Model):
                     'reg_code': taxapps.reg_code,
                     'tax_app_id': taxapps,
                 }
-
         return perceptions
 
     def _prepare_perception_vals(self, concept_id, vals, **kwargs):
@@ -525,16 +524,17 @@ class PerceptionTaxApplication(models.Model):
     ]
 
     @api.model
-    def _compute_proportional_vat(self, tax_application, percent, line_vals):
+    def _compute_proportional_vat(self, percent, line_vals, tax_application=False):
         vat_tax = {}
         base = 0.0
-
+        tax_application = tax_application or self
         for t in tax_application.vat_tax_ids:
             vat_tax[t.tax_id.id] = t.rate
 
-        for tax_id, vals in line_vals['vat_taxes'].iteritems():
-            if tax_id in vat_tax:
-                base += vals['base_amount'] * vat_tax[tax_id]
+        if line_vals.get('vat_taxes'):
+            for tax_id, vals in line_vals['vat_taxes'].items():
+                if tax_id in vat_tax:
+                    base += vals['base_amount'] * vat_tax[tax_id]
 
         amount = round(base * (percent / 100.0), 2)
         return amount
