@@ -67,7 +67,7 @@
                     </tree>
                     <form>
                         <h1>
-                            <field name="perception_id" class="oe_inline" domain="[('type_tax_use', '=', 'purchase')]" />
+                            <field name="perception_id" class="oe_inline" domain="[('type_tax_use', 'not in', [])]" />
                         </h1>
                         <group>
                             <group string="Information" name="info">
