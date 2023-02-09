@@ -78,7 +78,6 @@ class AccountInvoice(models.Model):
     _inherit = "account.invoice"
 
     def _compute_amount(self):
-        print('_over_compute_amount')
         # self.compute_taxes()
         return super()._compute_amount()
 
@@ -95,7 +94,6 @@ class AccountInvoice(models.Model):
         perc_array = []
 
         for perception in inv.perception_ids:
-            print(perception.name, perception.base, perception.amount)
             code = PCODES[perception.perception_id.jurisdiccion]
             perc = {
                 'Id': code,
@@ -200,13 +198,13 @@ class AccountInvoice(models.Model):
             #     ait_obj.create(taxe)
 
             # Calculo de Percepciones
-            if inv.type in ('out_invoice', 'out_refund'):
+            # if inv.type in ('out_invoice', 'out_refund'):
 
                 # Calculamos cada Percepcion configurada en el Partner
-                perception_obj = self.env['perception.perception']
-                perc_lines = perception_obj.create_perceptions_from_partner(
-                        partner, date=inv.date_invoice, invoice=inv)
-                inv.perception_ids = perc_lines
+                # perception_obj = self.env['perception.perception']
+                # perc_lines = perception_obj.create_perceptions_from_partner(
+                #         partner, date=inv.date_invoice, invoice=inv)
+                # inv.perception_ids = perc_lines
 
             # this line gets commented to avoid duplicates
             # for taxe in ait_obj._compute_perception_invoice_taxes(inv).\

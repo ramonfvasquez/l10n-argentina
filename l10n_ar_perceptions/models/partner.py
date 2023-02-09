@@ -46,10 +46,10 @@ class ResPartnerPerception(models.Model):
         store=True,
     )
 
-    _sql_constraints = [('perception_partner_unique',
-                         'unique(partner_id, perception_id)',
-                         'There must be only one perception of this ' +
-                         'type configured for the partner')]
+    # _sql_constraints = [('perception_partner_unique',
+    #                      'unique(partner_id, perception_id)',
+    #                      'There must be only one perception of this ' +
+    #                      'type configured for the partner')]
 
     @api.onchange('perception_id')
     def perception_id_change(self):
